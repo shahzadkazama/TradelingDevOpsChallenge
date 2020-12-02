@@ -49,3 +49,80 @@ Both Terraform and Kops need a back-end to store their state. I will use s3 buck
 aws s3 mb s3://terraform-state.${DOMAIN}
 aws s3 mb s3://kops-state.${DOMAIN}
 ```
+
+### git clone the project
+```bash
+git clone https://github.com/shahzadkazama/TradelingDevOpsChallenge.git
+cd TradelingDevOpsChallenge/Terraform_DevOps
+```
+
+### Terraform init
+
+Init Terraform with specifying where it should store the state:
+
+```bash
+terraform init \
+-backend-config "bucket=terraform-state.${DOMAIN}" \
+-backend-config “key=file.state”
+```
+Create new workspace where state of the configuration will be stored:
+```bash
+terraform workspace new ${PROJECT_NAME}
+```
+Or select workspace if already created:
+```bash
+terraform workspace select ${PROJECT_NAME}
+```
+
+Your Terraform is ready for applying, so let’s do it
+### Terraform apply
+```bash
+terraform apply -var "project_name=${PROJECT_NAME}" -var "domain=${DOMAIN}"
+```
+
+Your VPC has been created and ready to go. Let’s create k8s cluster on top of it with Kops.
+### Configure Kops state
+```bash
+export KOPS_STATE_STORE=s3://kops-state.${DOMAIN}
+```
+
+### Kops create cluster
+This cmd will only prepare configuration of the cluster and store it in the s3 bucket we specified via KOPS_STATE_STORE env variable.
+```bash
+kops create cluster \
+--vpc=$(terraform output vpc_id) \
+--master-zones=$(terraform output -json networks | jq -r '.[].availability_zone' | paste -sd, -) \
+--zones=$(terraform output -json networks | jq -r '.[].availability_zone' | paste -sd, -) \
+--subnets=$(terraform output -json subnet_ids | jq -r 'join(“,”)') \
+--networking=calico \
+--node-count=3 \
+--master-size=t2.medium \
+--node-size=t2.medium \
+--dns-zone=${PROJECT_NAME}.${DOMAIN} \
+--dns=private \
+--name=${PROJECT_NAME}.${DOMAIN}
+```
+
+“dns=private” is set in order to disable DNS resolution verification as we don’t have real doamin name.
+As you can see vpc, zones, master-zones, subnets comes from terraform output because VPC and Subnets already exist.
+Also we don’t need to set “target=terraform” flag that doesn’t make sense as it would create additional Terraform configuration that would require additional “Terraform apply” and state and so forth.
+
+### Review Kops clsuter configuration (optional)
+```bash
+kops edit ckuster --name ${PROJECT_NAME}.${DOMAIN}
+```
+
+### Apply Kops configuration
+This will deploy k8s cluster:
+```bash
+kops update cluster --name ${PROJECT_NAME}.${DOMAIN} --yes
+```
+### Check the cluster (will fail):
+```bash
+kubectl cluster-infoTo further debug and diagnose cluster problems, use kubectl cluster-info dump Unable to connect to the server: dial tcp: lookup api.dev.your.domain on 8.8.8.8:53: no such host 
+```
+
+The error arose because the hosted zone that contains “api.dev.your.domain” DNS record is private and the domain name cannot be resolved.
+In order to fix it get api endpoint ip from route53 in AWS console:
+
+
