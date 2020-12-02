@@ -190,7 +190,7 @@ kubectl get svc
 ```
 Now we can access our nodejs service by opening the loadbalancer url/ip in broser. 
 
-## Deploy the MongoDB EC2 with High Availability mode (master/slave) and configure it with the Application and configure it with the Application.
+### Deploy the MongoDB EC2 with High Availability mode (master/slave) and configure it with the Application.
  
 - first we need to create instances that can be launched using terraform
 - mongodb cluster can be created using ansible playbook, steps are present in this url https://www.techrunnr.com/ansible-playbook-for-mongodb-replication-setup-on-centos7/
