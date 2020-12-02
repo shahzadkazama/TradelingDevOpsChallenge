@@ -188,3 +188,4 @@ Kubectl expose is used to expose Deployment named nodejs-deployment of the type 
 ```bash
 kubectl get svc
 ```
+Now we can access our nodejs service by opening the loadbalancer url/ip in broser. 
