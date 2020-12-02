@@ -125,4 +125,22 @@ kubectl cluster-infoTo further debug and diagnose cluster problems, use kubectl 
 The error arose because the hosted zone that contains “api.dev.your.domain” DNS record is private and the domain name cannot be resolved.
 In order to fix it get api endpoint ip from route53 in AWS console:
 
+Fix it via hosts file:
+```bash
+sudo bash -c ‘echo “34.205.156.35 api.dev.your.domain” >> /etc/hosts’
+```
+Check cluster again:
+```bash
+kubectl cluster-info
+Kubernetes master is running at https://api.dev.your.domain
+KubeDNS is running at https://api.dev.your.domain/api/v1/namespaces/kube-system/services/kube-dns:dns/proxyTo further debug and diagnose cluster problems, use ‘kubectl cluster-info dump’.
+```
+Check the nodes:
+```bash
+kubectl get nodes
+NAME                         STATUS   ROLES    AGE   VERSION
+ip-10-0-0-156.ec2.internal   Ready    master   14m   v1.12.8
+ip-10-0-1-234.ec2.internal   Ready    master   14m   v1.12.8
+ip-10-0-2-157.ec2.internal   Ready    master   14m   v1.12.8
+```
 
