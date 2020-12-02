@@ -9,10 +9,11 @@
  - Deploy the Ingress controller such as Traefik / Kong and configure the Ingress accordingly.
 
 
-## EKS Deployment Steps
+## EKS cluster deployment using kops
 
-Required Tools
-- aws-cli, 
+###Required Tools
+- aws-cli
+  https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
 - Terraform
 - Kops 
 - jq
