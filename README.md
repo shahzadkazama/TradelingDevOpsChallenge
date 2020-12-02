@@ -141,6 +141,8 @@ KubeDNS is running at https://api.dev.your.domain/api/v1/namespaces/kube-system/
 Check the nodes:
 ```bash
 kubectl get nodes
+```
+```bash
 NAME                         STATUS   ROLES    AGE   VERSION
 ip-10-0-0-156.ec2.internal   Ready    master   14m   v1.12.8
 ip-10-0-1-234.ec2.internal   Ready    master   14m   v1.12.8
