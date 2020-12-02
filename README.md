@@ -43,3 +43,9 @@ Domain and project name
 export DOMAIN=your.domain
 export PROJECT_NAME=dev
 ```
+### The state files
+Both Terraform and Kops need a back-end to store their state. I will use s3 buckets for both.
+```bash 
+aws s3 mb s3://terraform-state.${DOMAIN}
+aws s3 mb s3://kops-state.${DOMAIN}
+```
