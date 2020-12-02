@@ -1,4 +1,6 @@
 ## Tasks
+
+
  - Using Terraform, build the infrastructure resources such as PVC, subnets, instances, elb, security group, etc., in the most optimal way with Production Grade security measures.
  - Build a Kubernetes Cluster in this VPC in an internal subnet, You can use any tool todo this.
  - You may need to modify the application source code or configuration in order to make the application running on the Kubernetes cluster, e.g. make use ENV variables in 12Factor style, create Dockerfile.
