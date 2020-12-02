@@ -154,7 +154,7 @@ ip-10-0-2-157.ec2.internal   Ready    master   14m   v1.12.8
 Limitions: I don't have aws account credentials to successfully execute this task
 
 - Image will be build, tagged and pushed to Amazon ECR after any commit in repo
-- github action build file location is present at this location ```TradelingDevOpsChallenge/.github/workflows/docker-publish.yml ```
+- github action build file present at this location ```TradelingDevOpsChallenge/.github/workflows/docker-publish.yml ```
 
 
 ## Kubernetes deployments
@@ -189,3 +189,9 @@ Kubectl expose is used to expose Deployment named nodejs-deployment of the type 
 kubectl get svc
 ```
 Now we can access our nodejs service by opening the loadbalancer url/ip in broser. 
+
+## Deploy the MongoDB EC2 with High Availability mode (master/slave) and configure it with the Application and configure it with the Application.
+ 
+- first we need to create instances that can be launched using terraform
+- mongodb cluster can be created using ansible playbook, steps are present in this url https://www.techrunnr.com/ansible-playbook-for-mongodb-replication-setup-on-centos7/
+- after creation of mongodb master/slave servers, we need to change the IP address from localhost to MongoDB server IP address at this file location ```TradelingDevOpsChallenge/config/database.js```
