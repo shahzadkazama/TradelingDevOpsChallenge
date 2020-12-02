@@ -151,6 +151,8 @@ ip-10-0-2-157.ec2.internal   Ready    master   14m   v1.12.8
 ```
 
 # Build the Docker image using GitHub actions
+Limitions: I don't have aws account credentials to successfully execute this task
 
 - Image will be build, tagged and pushed to Amazon ECR after any commit in repo
 - github action build file location is present at this location ```TradelingDevOpsChallenge/.github/workflows/docker-publish.yml ```
+  
