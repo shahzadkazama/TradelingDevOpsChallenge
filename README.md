@@ -8,5 +8,11 @@
  - Deploy the MongoDB on either Kubernetes or EC2 with High Availability mode (master/slave) and configure it with the Application.
  - Deploy the Ingress controller such as Traefik / Kong and configure the Ingress accordingly.
 
+
 ## EKS Deployment Steps
 
+Required Tools
+- aws-cli, 
+- Terraform
+- Kops 
+- jq
