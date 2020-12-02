@@ -12,6 +12,7 @@
 
 # Solution:-
 
+#### Limitions: I don't have aws account credentials to successfully execute this task
 
 ### EKS cluster deployment using kops
 
@@ -151,8 +152,8 @@ ip-10-0-2-157.ec2.internal   Ready    master   14m   v1.12.8
 ```
 
 # Build the Docker image using GitHub actions
-Limitions: I don't have aws account credentials to successfully execute this task
 
+- I deployed this project locally with dockerfile and found that it has some code errors but if i replace an example project with it then it works fine with my dockerfile.
 - Image will be build, tagged and pushed to Amazon ECR after any commit in repo
 - github action build file present at this location ```TradelingDevOpsChallenge/.github/workflows/docker-publish.yml ```
 
