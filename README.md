@@ -155,4 +155,36 @@ Limitions: I don't have aws account credentials to successfully execute this tas
 
 - Image will be build, tagged and pushed to Amazon ECR after any commit in repo
 - github action build file location is present at this location ```TradelingDevOpsChallenge/.github/workflows/docker-publish.yml ```
-  
+
+
+## Kubernetes deployments
+
+Login to AWS ECR
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.us-east-1.amazonaws.com
+
+```
+we can go ahead and create a deployment from this YAML file.
+```bash
+cd TradelingDevOpsChallenge/kubernetes
+kubectl create -f nodejs-deployment.yaml
+```
+Kubectl is Kubernetes' client which is used to create objects. With kubectl create, you can create any object -f indicates we’re using a file and nodejs-deployment.yaml is the file that will be used to create an object. You can check Deployment with the following command:
+
+```bash
+kubectl get deploy,po
+```
+
+### Expose The Deployment To The Internet
+Next, we’re going live through Kubernetes service object:
+
+```bash
+kubectl expose deployment nodejs-deployment --type="LoadBalancer"
+```
+This service will create a load balancer service that exposes the Deployment to the internet.
+
+Kubectl expose is used to expose Deployment named nodejs-deployment of the type Load Balancer.
+
+```bash
+kubectl get svc
+```
